@@ -79,7 +79,12 @@ function App() {
     const mount = mountRef.current
     const THREE = window.THREE
 
-    if (!mount || !THREE) return
+    if (!mount || !THREE) {
+      setStatus(
+        'Three.js failed to load. Check network access and refresh the page.',
+      )
+      return
+    }
 
     const scene = new THREE.Scene()
     scene.background = new THREE.Color('#0f172a')
@@ -151,7 +156,14 @@ function App() {
     const THREE = window.THREE
     const STLLoader = window.STLLoader
 
-    if (!file || !scene || !THREE || !STLLoader) return
+    if (!file) return
+
+    if (!scene || !THREE || !STLLoader) {
+      setStatus(
+        'Viewer libraries are not ready yet. Refresh and try uploading again.',
+      )
+      return
+    }
 
     const loader = new STLLoader()
     const reader = new FileReader()
