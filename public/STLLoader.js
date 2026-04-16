@@ -1,10 +1,8 @@
 ;(function () {
-  if (!window.THREE) {
-    console.error('THREE must be loaded before STLLoader.')
-    return
-  }
-
-  const THREE = window.THREE
+  function createLoader(THREE) {
+    if (!THREE) {
+      return
+    }
 
   function isBinary(data) {
     const reader = new DataView(data)
@@ -53,20 +51,35 @@
     return geometry
   }
 
-  class STLLoader {
-    parse(data) {
-      if (typeof data === 'string') {
-        return parseASCII(data)
-      }
+    class STLLoader {
+      parse(data) {
+        if (typeof data === 'string') {
+          return parseASCII(data)
+        }
 
-      if (isBinary(data)) {
-        return parseBinary(data)
-      }
+        if (isBinary(data)) {
+          return parseBinary(data)
+        }
 
-      const decoder = new TextDecoder()
-      return parseASCII(decoder.decode(data))
+        const decoder = new TextDecoder()
+        return parseASCII(decoder.decode(data))
+      }
     }
+
+    window.STLLoader = STLLoader
   }
 
-  window.STLLoader = STLLoader
+  if (window.THREE) {
+    createLoader(window.THREE)
+    return
+  }
+
+  window.addEventListener(
+    'three-ready',
+    function onThreeReady() {
+      window.removeEventListener('three-ready', onThreeReady)
+      createLoader(window.THREE)
+    },
+    { once: true },
+  )
 })()

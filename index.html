@@ -8,7 +8,10 @@
   </head>
   <body>
     <div id="root"></div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r180/three.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r180/three.min.js"
+      onload="window.dispatchEvent(new Event('three-ready'))"
+    ></script>
     <script src="/STLLoader.js"></script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
