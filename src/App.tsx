@@ -78,12 +78,15 @@ function App() {
   useEffect(() => {
     const mount = mountRef.current
     const THREE = window.THREE
+    const STLLoader = window.STLLoader
 
-    if (!mount || !THREE) {
-      setStatus(
-        'Three.js failed to load. Check network access and refresh the page.',
-      )
-      return
+    if (!mount || !THREE || !STLLoader) {
+      const timeoutId = window.setTimeout(() => {
+        setStatus(
+          'Viewer libraries are not ready yet. Refresh and try uploading again.',
+        )
+      }, 0)
+      return () => window.clearTimeout(timeoutId)
     }
 
     const scene = new THREE.Scene()
