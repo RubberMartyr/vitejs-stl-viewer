@@ -1,12 +1,12 @@
 .app {
   display: grid;
-  grid-template-columns: minmax(280px, 360px) 1fr;
+  grid-template-columns: minmax(320px, 420px) 1fr;
   min-height: 100svh;
 }
 
 .controls {
   border-right: 1px solid var(--border);
-  padding: 28px;
+  padding: 24px;
   text-align: left;
   display: flex;
   flex-direction: column;
@@ -14,26 +14,74 @@
 }
 
 .controls h1 {
-  font-size: 2rem;
+  font-size: 1.8rem;
   margin: 0;
 }
 
-.upload-label {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: fit-content;
-  padding: 10px 14px;
-  border-radius: 8px;
+.tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.tab {
   border: 1px solid var(--accent-border);
-  background: var(--accent-bg);
-  color: var(--text-h);
-  font-weight: 600;
+  background: #0f172a;
+  color: #cbd5e1;
+  border-radius: 8px;
+  padding: 10px 8px;
+  font-size: 0.85rem;
   cursor: pointer;
 }
 
-.file-input {
-  max-width: 100%;
+.tab.active {
+  background: var(--accent-bg);
+  color: var(--text-h);
+  font-weight: 700;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.panel textarea {
+  width: 100%;
+  resize: vertical;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: #020617;
+  color: #e2e8f0;
+  padding: 10px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.panel-compact {
+  color: #cbd5e1;
+}
+
+.action-button {
+  width: fit-content;
+  border: 1px solid var(--accent-border);
+  background: var(--accent-bg);
+  color: var(--text-h);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.polygon-preview {
+  margin: 0;
+  max-height: 220px;
+  overflow: auto;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #020617;
+  color: #93c5fd;
+  font-size: 0.82rem;
 }
 
 .status {
@@ -41,12 +89,36 @@
   font-size: 0.9rem;
 }
 
-.viewer {
+.viewer-shell {
+  position: relative;
   width: 100%;
   min-height: 100svh;
 }
 
-@media (max-width: 900px) {
+.viewer {
+  width: 100%;
+  height: 100%;
+}
+
+.label-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.edge-label {
+  position: absolute;
+  background: rgb(15 23 42 / 85%);
+  border: 1px solid #facc15;
+  border-radius: 4px;
+  color: #fef08a;
+  font-size: 11px;
+  line-height: 1;
+  padding: 3px 5px;
+  white-space: nowrap;
+}
+
+@media (max-width: 980px) {
   .app {
     grid-template-columns: 1fr;
   }
@@ -56,7 +128,7 @@
     border-bottom: 1px solid var(--border);
   }
 
-  .viewer {
-    min-height: 60svh;
+  .viewer-shell {
+    min-height: 62svh;
   }
 }
